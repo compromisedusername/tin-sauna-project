@@ -1,0 +1,20 @@
+version: '3.8'
+services:
+  postgres:
+    image: postgres
+    container_name: db
+    environment:
+      POSTGRES_USER: ${DB_USER}      # Nazwa użytkownika
+      POSTGRES_PASSWORD: ${DB_PASSWORD}  # Hasło dla użytkownika
+      POSTGRES_DB: ${DB_NAME}   # Nazwa bazy danych do utworzenia
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./db/Sauna_create.sql:/docker-entrypoint-initdb.d/Sauna_create.sql
+      - ./db/seed.sql:/docker-entrypoint-initdb.d/seed.sql # Skrypt do wstawiania danych
+      - postgres-data:/var/lib/postgresql/data   # Przechowywanie danych
+    restart: always
+
+volumes:
+  postgres-data:  # Użycie wolumenu do przechowywania danych
+
