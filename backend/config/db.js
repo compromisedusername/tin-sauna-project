@@ -1,11 +1,16 @@
 require('dotenv').config();
 
-const { Sequelize } = require("sequelize");
-const sequelize = new Sequelize(`postgres://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`);
+const permissions = require('./../models/model.permission');
+const reservation= require('./../models/model.reservation');
+const role = require('./../models/model.role');
+const sauna = require('./../models/model.sauna');
+const user = require('./../models/model.user');
 
-console.log(process.env.NODE_ENV) // dev
-console.log(process.env.NODE_ENV === 'dev') // false
-console.log(process.env.NODE_ENV.length) // 4 (including a space at the end)
+
+const { Sequelize, DataTypes, Model} = require("sequelize");
+
+const sequelize = new Sequelize(`postgres://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`
+);
 
 
 const authenticate = async () =>{
@@ -16,4 +21,11 @@ const authenticate = async () =>{
     console.error("Unable to connect to database: ", err);
   }
 };
-authenticate();
+
+
+
+
+
+
+module.exports = {authenticate, sequelize};
+
